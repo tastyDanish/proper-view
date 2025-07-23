@@ -1,6 +1,8 @@
 import { supabase } from "../supabaseClient";
 import type { Database } from "../../types/database.types";
 
+export type Property = Database["public"]["Tables"]["properties"]["Row"];
+
 export async function getProperties() {
 	return supabase.from("properties").select("*");
 }
