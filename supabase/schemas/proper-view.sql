@@ -16,7 +16,7 @@ create table properties (
   price numeric(12,2) not null,
   address text not null,
   bedrooms integer not null,
-  bathrooms integer not null,
+  bathrooms float not null,
   description text,
   status text not null check (status in ('active', 'pending', 'sold')),
   foreign key (agent_id) references agents(id)
