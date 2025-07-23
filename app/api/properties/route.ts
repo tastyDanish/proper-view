@@ -3,6 +3,8 @@
 // DELETE /api/properties/:id - delete a property
 // PUT /api/properties/:id - update a property
 
+import { createProperty } from "@/lib/db";
+
 export async function GET(request: Request) {
 	const { searchParams } = new URL(request.url);
 	const agentId = searchParams.get("agentId");
@@ -28,8 +30,11 @@ export async function POST(request: Request) {
 		});
 	}
 
-	// Placeholder: Create property
-	return Response.json({
-		message: `Would create property for agentId: ${agentId}`,
-	});
+	const { data, error } = await createProperty(body);
+
+	if (error) {
+		return Response.json({ error: error.message }, { status: 500 });
+	}
+
+	return Response.json(data);
 }
