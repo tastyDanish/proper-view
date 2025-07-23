@@ -1,0 +1,35 @@
+// GET /api/properties - list all properties
+// POST /api/properties - create a new property
+// DELETE /api/properties/:id - delete a property
+// PUT /api/properties/:id - update a property
+
+export async function GET(request: Request) {
+	const { searchParams } = new URL(request.url);
+	const agentId = searchParams.get("agentId");
+
+	if (!agentId) {
+		return Response.json({ error: "Agent ID is required" }, { status: 400 });
+	}
+
+	// Placeholder: Fetch properties for the agent
+	return Response.json({
+		message: `Would list properties for agentId: ${agentId}`,
+	});
+}
+
+export async function POST(request: Request) {
+	const body = await request.json();
+	// Extract property fields (example: title, address, price, etc.)
+	const { title, address, price, agentId } = body;
+
+	if (!title || !address || !price || !agentId) {
+		return Response.json({ error: "Missing required property fields" }, {
+			status: 400,
+		});
+	}
+
+	// Placeholder: Create property
+	return Response.json({
+		message: `Would create property for agentId: ${agentId}`,
+	});
+}
