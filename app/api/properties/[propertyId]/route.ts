@@ -4,12 +4,10 @@ import { NextRequest } from "next/server";
 // PUT /api/properties/:propertyId - update a property
 export async function PUT(
 	request: Request,
-	{ params }: { params: { propertyId: string } },
+	{ params }: { params: Promise<{ propertyId: string }> },
 ) {
-	const { propertyId } = params;
+	const { propertyId } = await params;
 	const body = await request.json();
-	// Extract fields to update (example: title, address, price, etc.)
-	const { title, address, price } = body;
 
 	if (!propertyId) {
 		return Response.json({ error: "Property ID is required" }, { status: 400 });
@@ -27,9 +25,9 @@ export async function PUT(
 // DELETE /api/properties/:propertyId - delete a property
 export async function DELETE(
 	request: Request,
-	{ params }: { params: { propertyId: string } },
+	{ params }: { params: Promise<{ propertyId: string }> },
 ) {
-	const { propertyId } = params;
+	const { propertyId } = await params;
 
 	if (!propertyId) {
 		return Response.json({ error: "Property ID is required" }, { status: 400 });

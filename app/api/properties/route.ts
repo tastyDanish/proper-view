@@ -3,28 +3,39 @@
 // DELETE /api/properties/:id - delete a property
 // PUT /api/properties/:id - update a property
 
-import { createProperty } from "@/lib/db";
+import { createProperty, getProperties } from "@/lib/db";
 
 export async function GET(request: Request) {
-	const { searchParams } = new URL(request.url);
-	const agentId = searchParams.get("agentId");
-
-	if (!agentId) {
-		return Response.json({ error: "Agent ID is required" }, { status: 400 });
+	const { data, error } = await getProperties();
+	if (error) {
+		return Response.json({ error: error.message }, { status: 500 });
 	}
 
-	// Placeholder: Fetch properties for the agent
-	return Response.json({
-		message: `Would list properties for agentId: ${agentId}`,
-	});
+	return Response.json(data);
 }
 
 export async function POST(request: Request) {
 	const body = await request.json();
 	// Extract property fields (example: title, address, price, etc.)
-	const { title, address, price, agentId } = body;
+	const {
+		title,
+		address,
+		price,
+		description,
+		bedrooms,
+		bathrooms,
+		agent_id,
+	} = body;
 
-	if (!title || !address || !price || !agentId) {
+	if (
+		!title ||
+		!address ||
+		!price ||
+		!description ||
+		!bedrooms ||
+		!bathrooms ||
+		!agent_id
+	) {
 		return Response.json({ error: "Missing required property fields" }, {
 			status: 400,
 		});

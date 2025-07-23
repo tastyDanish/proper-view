@@ -4,9 +4,9 @@ import { getInquiriesByPropertyId } from "@/lib/db";
 
 export async function GET(
 	request: Request,
-	{ params }: { params: { propertyId: string } },
+	{ params }: { params: Promise<{ propertyId: string }> },
 ) {
-	const { propertyId } = params;
+	const { propertyId } = await params;
 
 	if (!propertyId) {
 		return Response.json({ error: "Property ID is required" }, { status: 400 });

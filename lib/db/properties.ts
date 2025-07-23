@@ -9,12 +9,32 @@ export async function getPropertyById(id: string) {
 	return supabase.from("properties").select("*").eq("id", id).single();
 }
 
-export async function getPropertiesByAgentId(agentId: string) {
-	return supabase.from("properties").select("*").eq("agent_id", agentId);
+// we're using name for now since we don't have any real accounts.
+export async function getPropertiesByAgentName(agentName: string) {
+	return supabase
+		.from("properties")
+		.select("*, agents!inner(*)")
+		.eq("agents.name", agentName);
 }
 
 export async function createProperty(
 	property: Database["public"]["Tables"]["properties"]["Insert"],
 ) {
 	return supabase.from("properties").insert(property).select().single();
+}
+
+export async function updateProperty(
+	property: Database["public"]["Tables"]["properties"]["Update"],
+) {
+	if (!property.id) {
+		throw new Error("Property id is required for update.");
+	}
+	return supabase.from("properties").update(property).eq(
+		"id",
+		property.id as string,
+	).select().single();
+}
+
+export async function deleteProperty(id: string) {
+	return supabase.from("properties").delete().eq("id", id);
 }

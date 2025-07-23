@@ -12,6 +12,7 @@ export async function getInquiryById(id: string) {
 export async function createInquiry(
 	inquiry: Database["public"]["Tables"]["inquiries"]["Insert"],
 ) {
+	console.log("here's the inquiry", inquiry);
 	return supabase.from("inquiries").insert(inquiry).select().single();
 }
 
