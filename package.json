@@ -6,7 +6,8 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "db:types": "supabase gen types typescript --local > types/database.types.ts"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.52.1",
