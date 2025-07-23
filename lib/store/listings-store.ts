@@ -7,11 +7,13 @@ interface ListingsState {
 		price: { min: number | null; max: number | null };
 		bedrooms: { min: number | null; max: number | null };
 		bathrooms: { min: number | null; max: number | null };
+		city: string | null;
 	};
 	setListings: (listings: Property[]) => void;
 	setPriceFilter: (min: number | null, max: number | null) => void;
 	setBedroomFilter: (min: number | null, max: number | null) => void;
 	setBathroomFilter: (min: number | null, max: number | null) => void;
+	setCityFilter: (city: string | null) => void;
 	sortListings: (key: keyof Property, direction?: "asc" | "desc") => void;
 	getFilteredListings: () => Property[];
 }
@@ -22,6 +24,7 @@ export const useListingsStore = create<ListingsState>((set, get) => ({
 		price: { min: null, max: null },
 		bedrooms: { min: null, max: null },
 		bathrooms: { min: null, max: null },
+		city: null,
 	},
 	setListings: (listings) => set({ listings }),
 	setPriceFilter: (min, max) =>
@@ -32,6 +35,8 @@ export const useListingsStore = create<ListingsState>((set, get) => ({
 		set((state) => ({
 			filters: { ...state.filters, bathrooms: { min, max } },
 		})),
+	setCityFilter: (city) =>
+		set((state) => ({ filters: { ...state.filters, city } })),
 	sortListings: (key, direction = "asc") => {
 		const sorted = [...get().listings].sort((a, b) => {
 			if (a[key] === b[key]) return 0;
@@ -48,24 +53,23 @@ export const useListingsStore = create<ListingsState>((set, get) => ({
 			const price = listing.price as number | undefined;
 			const bedrooms = listing.bedrooms as number | undefined;
 			const bathrooms = listing.bathrooms as number | undefined;
+			const city = listing.city as string | undefined;
 
-			const priceOk =
-				(filters.price.min == null ||
-					(price != null && price >= filters.price.min)) &&
+			const priceOk = (filters.price.min == null ||
+				(price != null && price >= filters.price.min)) &&
 				(filters.price.max == null ||
 					(price != null && price <= filters.price.max));
-			const bedroomsOk =
-				(filters.bedrooms.min == null ||
-					(bedrooms != null && bedrooms >= filters.bedrooms.min)) &&
+			const bedroomsOk = (filters.bedrooms.min == null ||
+				(bedrooms != null && bedrooms >= filters.bedrooms.min)) &&
 				(filters.bedrooms.max == null ||
 					(bedrooms != null && bedrooms <= filters.bedrooms.max));
-			const bathroomsOk =
-				(filters.bathrooms.min == null ||
-					(bathrooms != null && bathrooms >= filters.bathrooms.min)) &&
+			const bathroomsOk = (filters.bathrooms.min == null ||
+				(bathrooms != null && bathrooms >= filters.bathrooms.min)) &&
 				(filters.bathrooms.max == null ||
 					(bathrooms != null && bathrooms <= filters.bathrooms.max));
+			const cityOk = !filters.city || (city && city === filters.city);
 
-			return priceOk && bedroomsOk && bathroomsOk;
+			return priceOk && bedroomsOk && bathroomsOk && cityOk;
 		});
 	},
 }));

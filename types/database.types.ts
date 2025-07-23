@@ -17,10 +17,10 @@ export type Database = {
     Functions: {
       graphql: {
         Args: {
-          operationName?: string
           extensions?: Json
-          variables?: Json
+          operationName?: string
           query?: string
+          variables?: Json
         }
         Returns: Json
       }
@@ -99,41 +99,44 @@ export type Database = {
       }
       properties: {
         Row: {
-          address: string
           agent_id: string
           bathrooms: number
           bedrooms: number
+          city: string
           created_at: string | null
           description: string | null
           id: string
           price: number
           status: string
+          street_address: string
           title: string
           updated_at: string | null
         }
         Insert: {
-          address: string
           agent_id: string
           bathrooms: number
           bedrooms: number
+          city: string
           created_at?: string | null
           description?: string | null
           id?: string
           price: number
           status: string
+          street_address: string
           title: string
           updated_at?: string | null
         }
         Update: {
-          address?: string
           agent_id?: string
           bathrooms?: number
           bedrooms?: number
+          city?: string
           created_at?: string | null
           description?: string | null
           id?: string
           price?: number
           status?: string
+          street_address?: string
           title?: string
           updated_at?: string | null
         }

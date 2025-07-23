@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useMemo } from "react";
 import { useListingsStore } from "../../lib/store/listings-store";
 
 const ListingFilter: React.FC = () => {
-  const { filters, setPriceFilter, setBedroomFilter, setBathroomFilter } =
-    useListingsStore();
+  const {
+    filters,
+    setPriceFilter,
+    setBedroomFilter,
+    setBathroomFilter,
+    setCityFilter,
+    listings,
+  } = useListingsStore();
+
+  // Get unique cities from listings
+  const cities = useMemo(() => {
+    const citySet = new Set<string>();
+    listings.forEach((l) => {
+      if (l.city) citySet.add(l.city);
+    });
+    return Array.from(citySet).sort();
+  }, [listings]);
 
   return (
     <div className="flex flex-col md:flex-row gap-4 mb-6">
+      {/* City Filter */}
+      <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
+        <span className="font-semibold">City</span>
+        <select
+          className="input input-bordered w-32"
+          value={filters.city ?? ""}
+          onChange={(e) => setCityFilter(e.target.value || null)}>
+          <option value="">All</option>
+          {cities.map((city) => (
+            <option
+              key={city}
+              value={city}>
+              {city}
+            </option>
+          ))}
+        </select>
+        {filters.city && (
+          <button
+            className="btn btn-xs mt-2"
+            onClick={() => setCityFilter(null)}
+            type="button">
+            Clear
+          </button>
+        )}
+      </div>
       {/* Price Filter */}
       <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
         <span className="font-semibold">Price</span>

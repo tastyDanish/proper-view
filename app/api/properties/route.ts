@@ -19,7 +19,8 @@ export async function POST(request: Request) {
 	// Extract property fields (example: title, address, price, etc.)
 	const {
 		title,
-		address,
+		street_address,
+		city,
 		price,
 		description,
 		bedrooms,
@@ -29,7 +30,8 @@ export async function POST(request: Request) {
 
 	if (
 		!title ||
-		!address ||
+		!street_address ||
+		!city ||
 		!price ||
 		!description ||
 		!bedrooms ||
