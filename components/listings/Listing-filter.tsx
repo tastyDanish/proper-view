@@ -22,13 +22,16 @@ const ListingFilter: React.FC = () => {
   }, [listings]);
 
   return (
-    <div className="flex flex-col md:flex-row gap-4 mb-6">
+    <div className="flex flex-col [@media(min-width:1044px)]:flex-row gap-4 mb-6">
       {/* City Filter */}
-      <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
-        <span className="font-semibold">City</span>
-        <div className="h-full flex flex-col justify-center">
+      <div className="flex flex-col gap-2 p-3 border rounded-lg bg-white shadow-sm max-w-sm w-full md:w-56 min-w-[180px]">
+        <div className="flex items-center justify-between mb-1">
+          <span className="font-semibold text-base">City</span>
+          {/* No clear button for city */}
+        </div>
+        <div className="h-full flex flex-col justify-end">
           <select
-            className="input input-bordered w-32 border border-gray-300 px-2"
+            className="input input-bordered w-full border border-gray-300 px-3 py-2 text-base"
             value={filters.city ?? ""}
             onChange={(e) => setCityFilter(e.target.value || null)}>
             <option value="">All</option>
@@ -43,13 +46,22 @@ const ListingFilter: React.FC = () => {
         </div>
       </div>
       {/* Price Filter */}
-      <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
-        <span className="font-semibold">Price</span>
-        <div className="flex gap-2 items-center">
+      <div className="flex flex-col gap-2 p-3 border rounded-lg bg-white shadow-sm max-w-sm w-full [@media(min-width:1044px)]:w-70 min-w-[100px]">
+        <div className="flex items-center justify-between mb-1">
+          <span className="font-semibold text-base">Price</span>
+          <Button
+            variant="outline"
+            className="px-3 py-1 text-sm"
+            onClick={() => setPriceFilter(null, null)}
+            type="button">
+            Clear
+          </Button>
+        </div>
+        <div className="flex gap-2 md:items-center justify-around [@media(min-width:1044px)]:flex-row flex-col">
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered [@media(min-width:1044px)]:w-28 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.price.min ?? ""}
             onChange={(e) =>
               setPriceFilter(
@@ -59,11 +71,11 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <span>-</span>
+          <span className="[@media(min-width:1044px)]:block hidden">-</span>
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered [@media(min-width:1044px)]:w-28 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.price.max ?? ""}
             onChange={(e) =>
               setPriceFilter(
@@ -73,22 +85,25 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
+        </div>
+      </div>
+      {/* Bedrooms Filter */}
+      <div className="flex flex-col gap-2 p-3 border rounded-lg bg-white shadow-sm max-w-sm w-full md:w-56 min-w-[100px]">
+        <div className="flex items-center justify-between mb-1">
+          <span className="font-semibold text-base">Bedrooms</span>
           <Button
             variant="outline"
-            onClick={() => setPriceFilter(null, null)}
+            className="px-3 py-1 text-sm"
+            onClick={() => setBedroomFilter(null, null)}
             type="button">
             Clear
           </Button>
         </div>
-      </div>
-      {/* Bedrooms Filter */}
-      <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
-        <span className="font-semibold">Bedrooms</span>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 md:items-center justify-around md:flex-row flex-col">
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered md:w-20 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.bedrooms.min ?? ""}
             onChange={(e) =>
               setBedroomFilter(
@@ -98,11 +113,11 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <span>-</span>
+          <span className="md:block hidden">-</span>
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered md:w-20 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.bedrooms.max ?? ""}
             onChange={(e) =>
               setBedroomFilter(
@@ -112,22 +127,25 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
+        </div>
+      </div>
+      {/* Bathrooms Filter */}
+      <div className="flex flex-col gap-2 p-3 border rounded-lg bg-white shadow-sm max-w-sm w-full md:w-56 min-w-[100px]">
+        <div className="flex items-center justify-between mb-1">
+          <span className="font-semibold text-base">Bathrooms</span>
           <Button
             variant="outline"
-            onClick={() => setBedroomFilter(null, null)}
+            className="px-3 py-1 text-sm"
+            onClick={() => setBathroomFilter(null, null)}
             type="button">
             Clear
           </Button>
         </div>
-      </div>
-      {/* Bathrooms Filter */}
-      <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
-        <span className="font-semibold">Bathrooms</span>
-        <div className="flex gap-2 items-center">
+        <div className="flex gap-2 md:items-center md:flex-row justify-around flex-col">
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered md:w-20 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.bathrooms.min ?? ""}
             onChange={(e) =>
               setBathroomFilter(
@@ -137,11 +155,11 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <span>-</span>
+          <span className="md:block hidden">-</span>
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20 border border-gray-300 px-2"
+            className="input input-bordered md:w-20 border border-gray-300 px-3 py-2 text-base w-full"
             value={filters.bathrooms.max ?? ""}
             onChange={(e) =>
               setBathroomFilter(
@@ -151,12 +169,6 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <Button
-            variant="outline"
-            onClick={() => setBathroomFilter(null, null)}
-            type="button">
-            Clear
-          </Button>
         </div>
       </div>
     </div>

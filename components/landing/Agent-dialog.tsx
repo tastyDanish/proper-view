@@ -10,20 +10,17 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import React, { useState } from "react";
-import { useAgentPropertiesStore } from "@/lib/store/agent-properties-store";
 import { useRouter } from "next/navigation";
+import { useUserStore } from "@/lib/store/user-store";
 
 const AgentDialog = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-  const setAgentName = useAgentPropertiesStore((state) => state.setAgentName);
-  const clearProperties = useAgentPropertiesStore(
-    (state) => state.clearProperties
-  );
+  const setAgentName = useUserStore((state) => state.setAgentName);
+
   const router = useRouter();
 
   const handleLogin = () => {
-    clearProperties();
     setAgentName(username);
     router.push("/agent-dashboard");
   };

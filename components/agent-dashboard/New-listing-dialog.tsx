@@ -1,5 +1,4 @@
 import React from "react";
-import { useAgentPropertiesStore } from "@/lib/store/agent-properties-store";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -10,20 +9,26 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { useAgentProperties } from "@/lib/hooks/use-agent-properties";
 
-const NewListingDialog = () => {
-  const { addProperty } = useAgentPropertiesStore();
+interface NewListingDialogProps {
+  agentName: string;
+}
+
+const initialForm = {
+  title: "",
+  street_address: "",
+  city: "",
+  price: "",
+  bedrooms: "",
+  bathrooms: "",
+  description: "",
+};
+
+const NewListingDialog = ({ agentName }: NewListingDialogProps) => {
+  const { addProperty, isAdding } = useAgentProperties(agentName);
   const [open, setOpen] = React.useState(false);
-  const [form, setForm] = React.useState({
-    title: "",
-    street_address: "",
-    city: "",
-    price: "",
-    bedrooms: "",
-    bathrooms: "",
-    description: "",
-  });
-  const [loading, setLoading] = React.useState(false);
+  const [form, setForm] = React.useState(initialForm);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -33,28 +38,19 @@ const NewListingDialog = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
     await addProperty({
       ...form,
       price: Number(form.price),
       bedrooms: Number(form.bedrooms),
       bathrooms: Number(form.bathrooms),
-      agent_id: "fake-agent-id",
+      agent_id: agentName,
+      agent_name: agentName,
       status: "active",
       created_at: null,
       updated_at: null,
     });
-    setLoading(false);
     setOpen(false);
-    setForm({
-      title: "",
-      street_address: "",
-      city: "",
-      price: "",
-      bedrooms: "",
-      bathrooms: "",
-      description: "",
-    });
+    setForm(initialForm);
   };
 
   return (
@@ -136,8 +132,8 @@ const NewListingDialog = () => {
           <DialogFooter>
             <Button
               type="submit"
-              disabled={loading}>
-              {loading ? "Creating..." : "Create Listing"}
+              disabled={isAdding}>
+              {isAdding ? "Creating..." : "Create Listing"}
             </Button>
           </DialogFooter>
         </form>

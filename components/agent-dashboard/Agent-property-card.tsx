@@ -10,18 +10,22 @@ import {
   DialogFooter,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { useAgentPropertiesStore } from "@/lib/store/agent-properties-store";
+import { useAgentProperties } from "@/lib/hooks/use-agent-properties";
 
 interface AgentPropertyCardProps {
   property: Property;
+  agentName: string;
 }
 
-const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
-  const { updateProperty, deleteProperty } = useAgentPropertiesStore();
+const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
+  property,
+  agentName,
+}) => {
+  const { updateProperty, isUpdating, deleteProperty, isDeleting } =
+    useAgentProperties(agentName);
   const [editMode, setEditMode] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   const [form, setForm] = useState({ ...property });
-  const [loading, setLoading] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -30,7 +34,6 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
   };
 
   const handleSave = async () => {
-    setLoading(true);
     await updateProperty({
       id: property.id,
       price: Number(form.price),
@@ -42,7 +45,6 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
       city: form.city || "",
       status: form.status || "active",
     });
-    setLoading(false);
     setEditMode(false);
   };
 
@@ -52,9 +54,7 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
   };
 
   const handleDelete = async () => {
-    setLoading(true);
     await deleteProperty(property.id);
-    setLoading(false);
     setShowDelete(false);
   };
 
@@ -192,13 +192,13 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
           <>
             <Button
               onClick={handleSave}
-              disabled={loading}>
+              disabled={isUpdating}>
               Save
             </Button>
             <Button
               variant="outline"
               onClick={handleCancel}
-              disabled={loading}>
+              disabled={isUpdating}>
               Cancel
             </Button>
           </>
@@ -231,13 +231,13 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
                   <Button
                     variant="destructive"
                     onClick={handleDelete}
-                    disabled={loading}>
+                    disabled={isDeleting}>
                     Yes, delete
                   </Button>
                   <Button
                     variant="outline"
                     onClick={() => setShowDelete(false)}
-                    disabled={loading}>
+                    disabled={isDeleting}>
                     Cancel
                   </Button>
                 </DialogFooter>

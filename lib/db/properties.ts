@@ -16,7 +16,8 @@ export async function getPropertiesByAgentName(agentName: string) {
 	return supabase
 		.from("properties")
 		.select("*, agents!inner(*)")
-		.eq("agents.name", agentName);
+		.eq("agents.name", agentName)
+		.order("created_at", { ascending: false });
 }
 
 export async function createProperty(
