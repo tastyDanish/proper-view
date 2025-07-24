@@ -1,3 +1,4 @@
+import AgentDialog from "@/components/landing/Agent-dialog";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -31,9 +32,7 @@ export default function Home() {
               className="px-6 py-3 rounded-lg bg-blue-600 text-white font-semibold shadow hover:bg-blue-700 transition">
               View Listings
             </Link>
-            <button className="px-6 py-3 rounded-lg border border-blue-600 text-blue-600 font-semibold bg-white shadow hover:bg-blue-50 transition">
-              Agent Login
-            </button>
+            <AgentDialog />
           </div>
         </div>
       </main>
