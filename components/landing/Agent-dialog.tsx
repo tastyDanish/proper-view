@@ -10,15 +10,27 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "../ui/button";
 import React, { useState } from "react";
+import { useAgentPropertiesStore } from "@/lib/store/agent-properties-store";
+import { useRouter } from "next/navigation";
 
 const AgentDialog = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const setAgentName = useAgentPropertiesStore((state) => state.setAgentName);
+  const clearProperties = useAgentPropertiesStore(
+    (state) => state.clearProperties
+  );
+  const router = useRouter();
 
   const handleLogin = () => {
-    // TODO: Implement login logic
-    console.log("Username:", username);
-    console.log("Password:", password);
+    clearProperties();
+    setAgentName(username);
+    router.push("/agent-dashboard");
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    handleLogin();
   };
 
   return (
@@ -31,45 +43,47 @@ const AgentDialog = () => {
         </Button>
       </DialogTrigger>
       <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Agent Login</DialogTitle>
-        </DialogHeader>
-        <DialogDescription>
-          Please enter your name and password to login.
-        </DialogDescription>
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            margin: "1rem 0",
-          }}>
-          <input
-            type="text"
-            placeholder="Name"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+        <form onSubmit={handleSubmit}>
+          <DialogHeader>
+            <DialogTitle>Agent Login</DialogTitle>
+          </DialogHeader>
+          <DialogDescription>
+            Please enter your name and password to login.
+          </DialogDescription>
+          <div
             style={{
-              padding: "0.5rem",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
-          />
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            style={{
-              padding: "0.5rem",
-              borderRadius: "4px",
-              border: "1px solid #ccc",
-            }}
-          />
-        </div>
-        <DialogFooter>
-          <Button onClick={handleLogin}>Login</Button>
-        </DialogFooter>
+              display: "flex",
+              flexDirection: "column",
+              gap: "1rem",
+              margin: "1rem 0",
+            }}>
+            <input
+              type="text"
+              placeholder="Name"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              style={{
+                padding: "0.5rem",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            />
+            <input
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              style={{
+                padding: "0.5rem",
+                borderRadius: "4px",
+                border: "1px solid #ccc",
+              }}
+            />
+          </div>
+          <DialogFooter>
+            <Button type="submit">Login</Button>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   );

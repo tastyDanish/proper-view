@@ -12,6 +12,7 @@ export async function GET(
 		return Response.json({ error: "Agent ID is required" }, { status: 400 });
 	}
 
+	// for now we are using name for agentId since we don't have any real accounts.
 	const { data, error } = await getPropertiesByAgentName(agentId);
 
 	if (error) {
