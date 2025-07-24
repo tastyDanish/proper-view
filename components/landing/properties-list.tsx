@@ -20,12 +20,22 @@ const PropertiesList = () => {
     if (data) setListings(data);
   }, [data, setListings]);
 
-  if (isLoading) return <div>Loading properties...</div>;
-  if (error) return <div>Error loading properties.</div>;
+  if (isLoading)
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        Loading properties...
+      </div>
+    );
+  if (error)
+    return (
+      <div className="w-full h-full flex justify-center items-center">
+        Error loading properties.
+      </div>
+    );
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 [@media(min-width:1044px)]:px-16">
         <AnimatePresence mode="popLayout">
           {getFilteredListings().map((property) => (
             <motion.div

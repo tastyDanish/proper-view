@@ -27,7 +27,13 @@ const ListingFilter: React.FC = () => {
       <div className="flex flex-col gap-2 p-3 border rounded-lg bg-white shadow-sm max-w-sm w-full md:w-56 min-w-[180px]">
         <div className="flex items-center justify-between mb-1">
           <span className="font-semibold text-base">City</span>
-          {/* No clear button for city */}
+          <Button
+            variant="outline"
+            className="px-3 py-1 text-sm"
+            onClick={() => setCityFilter(null)}
+            type="button">
+            Clear
+          </Button>
         </div>
         <div className="h-full flex flex-col justify-end">
           <select

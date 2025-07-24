@@ -5,6 +5,8 @@ import useSWRMutation from "swr/mutation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ListingGallery from "./listing-gallery";
+import { Button } from "../ui/button";
+import { X } from "lucide-react";
 
 interface ListingDetailProps {
   property: Property;
@@ -99,12 +101,13 @@ export default function ListingDetail({
             exit="exit"
             layoutId={layoutId}
             onClick={(e) => e.stopPropagation()}>
-            <button
-              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600"
+            <Button
+              variant="ghost"
+              className="absolute top-2 right-2 text-gray-400 hover:text-gray-600 text-2xl px-3 py-2 flex items-center justify-center"
               onClick={onClose}
               aria-label="Close">
-              &times;
-            </button>
+              <X className="w-10 h-10" />
+            </Button>
             <h2 className="text-2xl font-bold mb-2">{property.title}</h2>
             <p className="mb-4 text-gray-600">{property.description}</p>
             <div className="mb-4">
