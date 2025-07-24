@@ -3,7 +3,7 @@
 // DELETE /api/properties/:id - delete a property
 // PUT /api/properties/:id - update a property
 
-import { createProperty, getProperties } from "@/lib/db";
+import { createProperty, getAgentByName, getProperties } from "@/lib/db";
 
 export async function GET(request: Request) {
 	const { data, error } = await getProperties();
@@ -25,8 +25,9 @@ export async function POST(request: Request) {
 		description,
 		bedrooms,
 		bathrooms,
-		agent_id,
 	} = body;
+
+	const { agent_name, ...propertyData } = body;
 
 	if (
 		!title ||
@@ -36,14 +37,22 @@ export async function POST(request: Request) {
 		!description ||
 		!bedrooms ||
 		!bathrooms ||
-		!agent_id
+		!agent_name
 	) {
 		return Response.json({ error: "Missing required property fields" }, {
 			status: 400,
 		});
 	}
 
-	const { data, error } = await createProperty(body);
+	const { data: agent, error: agentError } = await getAgentByName(agent_name);
+	if (agentError) {
+		return Response.json({ error: agentError.message }, { status: 500 });
+	}
+
+	const { data, error } = await createProperty({
+		...propertyData,
+		agent_id: agent.id,
+	});
 
 	if (error) {
 		return Response.json({ error: error.message }, { status: 500 });

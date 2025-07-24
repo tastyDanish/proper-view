@@ -2,6 +2,9 @@
 
 ## Supabase
 
+you'll need to install the supabase CLI in order to setup the database
+follow the instructions here: https://supabase.com/docs/guides/local-development/cli/getting-started?queryGroups=platform&platform=macos#installing-the-supabase-cli
+
 you'll need to start up a new database
 `supabase start`
 
@@ -15,6 +18,8 @@ NEXT_PUBLIC_SUPABASE_URL=http://127.0.0.1:54321
 
 NEXT_PUBLIC_SUPABASE_ANON_KEY={Copy from the supabase start commands output}
 ```
+
+you can also get the anon key from running `supabase status`
 
 # creating a new migration file
 

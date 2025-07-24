@@ -11,9 +11,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-// TODO: Replace with real agentId from auth/session
-const AGENT_ID = "demo-agent";
-
 const NewListingDialog = () => {
   const { addProperty } = useAgentPropertiesStore();
   const [open, setOpen] = React.useState(false);
@@ -42,7 +39,7 @@ const NewListingDialog = () => {
       price: Number(form.price),
       bedrooms: Number(form.bedrooms),
       bathrooms: Number(form.bathrooms),
-      agent_id: AGENT_ID,
+      agent_id: "fake-agent-id",
       status: "active",
       created_at: null,
       updated_at: null,

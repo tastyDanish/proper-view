@@ -2,16 +2,14 @@
 import React, { useEffect } from "react";
 import useSWR from "swr";
 import { useAgentPropertiesStore } from "@/lib/store/agent-properties-store";
-import Listing from "@/components/listings/Listing";
+import AgentPropertyCard from "@/components/agent-dashboard/Agent-property-card";
 import { Button } from "@/components/ui/button";
 import NewListingDialog from "@/components/agent-dashboard/New-listing-dialog";
-
-// TODO: Replace with real agentId from auth/session
-const AGENT_ID = "demo-agent";
-
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
+import { fetcher } from "@/lib/fetcher";
+import { useRouter } from "next/navigation";
 
 const AgentDashboard = () => {
+  const router = useRouter();
   const { properties, setProperties, agentName } = useAgentPropertiesStore();
   const agentId = agentName || "demo-agent";
   const { data, error, isLoading } = useSWR(
@@ -27,6 +25,9 @@ const AgentDashboard = () => {
 
   return (
     <div className="max-w-3xl mx-auto py-8 px-4">
+      <div onClick={() => router.push("/")}>
+        <h1>Proper View</h1>
+      </div>
       <div className="flex justify-between items-center mb-6">
         <h1 className="text-2xl font-bold">Agent Dashboard</h1>
         <NewListingDialog />
@@ -35,15 +36,10 @@ const AgentDashboard = () => {
       {error && <div className="text-red-500">Failed to load listings.</div>}
       <div className="grid gap-4">
         {properties.map((property) => (
-          <div
+          <AgentPropertyCard
             key={property.id}
-            className="relative border rounded-lg p-4 bg-white shadow-sm flex flex-col md:flex-row md:items-center md:justify-between">
-            <Listing property={property} />
-            <div className="flex gap-2 mt-4 md:mt-0 md:ml-4">
-              <Button variant="outline">Edit</Button>
-              <Button variant="destructive">Delete</Button>
-            </div>
-          </div>
+            property={property}
+          />
         ))}
       </div>
     </div>

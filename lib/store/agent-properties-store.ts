@@ -1,16 +1,13 @@
 import { create } from "zustand";
-import {
-	createProperty,
-	deleteProperty,
-	Property,
-	updateProperty,
-} from "../db/properties";
+import { deleteProperty, Property, updateProperty } from "../db/properties";
 
 interface AgentPropertiesState {
 	properties: Property[];
 	setProperties: (properties: Property[]) => void;
 	addProperty: (property: Omit<Property, "id">) => Promise<void>;
-	updateProperty: (property: Property) => Promise<void>;
+	updateProperty: (
+		property: Omit<Property, "created_at" | "updated_at" | "agent_id">,
+	) => Promise<void>;
 	deleteProperty: (id: string) => Promise<void>;
 	agentName: string;
 	setAgentName: (name: string) => void;
@@ -24,22 +21,34 @@ export const useAgentPropertiesStore = create<AgentPropertiesState>((
 	properties: [],
 	setProperties: (properties) => set({ properties }),
 	addProperty: async (property) => {
-		const { data, error } = await createProperty(property as any);
-		if (!error && data) {
+		const res = await fetch("/api/properties", {
+			method: "POST",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify({ ...property, agent_name: get().agentName }),
+		});
+		const data = await res.json();
+		if (res.ok && data) {
 			set((state) => ({ properties: [...state.properties, data] }));
 		}
 	},
 	updateProperty: async (property) => {
-		const { data, error } = await updateProperty(property as any);
-		if (!error && data) {
+		const res = await fetch(`/api/properties/${property.id}`, {
+			method: "PUT",
+			headers: { "Content-Type": "application/json" },
+			body: JSON.stringify(property),
+		});
+		const data = await res.json();
+		if (res.ok && data) {
 			set((state) => ({
 				properties: state.properties.map((p) => p.id === data.id ? data : p),
 			}));
 		}
 	},
 	deleteProperty: async (id) => {
-		const { error } = await deleteProperty(id);
-		if (!error) {
+		const res = await fetch(`/api/properties/${id}`, {
+			method: "DELETE",
+		});
+		if (res.ok) {
 			set((state) => ({
 				properties: state.properties.filter((p) => p.id !== id),
 			}));
