@@ -1,5 +1,6 @@
 import React, { useMemo } from "react";
 import { useListingsStore } from "../../lib/store/listings-store";
+import { Button } from "../ui/button";
 
 const ListingFilter: React.FC = () => {
   const {
@@ -25,27 +26,21 @@ const ListingFilter: React.FC = () => {
       {/* City Filter */}
       <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
         <span className="font-semibold">City</span>
-        <select
-          className="input input-bordered w-32"
-          value={filters.city ?? ""}
-          onChange={(e) => setCityFilter(e.target.value || null)}>
-          <option value="">All</option>
-          {cities.map((city) => (
-            <option
-              key={city}
-              value={city}>
-              {city}
-            </option>
-          ))}
-        </select>
-        {filters.city && (
-          <button
-            className="btn btn-xs mt-2"
-            onClick={() => setCityFilter(null)}
-            type="button">
-            Clear
-          </button>
-        )}
+        <div className="h-full flex flex-col justify-center">
+          <select
+            className="input input-bordered w-32 border border-gray-300 px-2"
+            value={filters.city ?? ""}
+            onChange={(e) => setCityFilter(e.target.value || null)}>
+            <option value="">All</option>
+            {cities.map((city) => (
+              <option
+                key={city}
+                value={city}>
+                {city}
+              </option>
+            ))}
+          </select>
+        </div>
       </div>
       {/* Price Filter */}
       <div className="flex flex-col gap-2 p-4 border rounded-lg bg-white shadow-sm">
@@ -54,7 +49,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.price.min ?? ""}
             onChange={(e) =>
               setPriceFilter(
@@ -68,7 +63,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.price.max ?? ""}
             onChange={(e) =>
               setPriceFilter(
@@ -78,12 +73,12 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <button
-            className="btn btn-xs ml-2"
+          <Button
+            variant="outline"
             onClick={() => setPriceFilter(null, null)}
             type="button">
             Clear
-          </button>
+          </Button>
         </div>
       </div>
       {/* Bedrooms Filter */}
@@ -93,7 +88,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.bedrooms.min ?? ""}
             onChange={(e) =>
               setBedroomFilter(
@@ -107,7 +102,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.bedrooms.max ?? ""}
             onChange={(e) =>
               setBedroomFilter(
@@ -117,12 +112,12 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <button
-            className="btn btn-xs ml-2"
+          <Button
+            variant="outline"
             onClick={() => setBedroomFilter(null, null)}
             type="button">
             Clear
-          </button>
+          </Button>
         </div>
       </div>
       {/* Bathrooms Filter */}
@@ -132,7 +127,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Min"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.bathrooms.min ?? ""}
             onChange={(e) =>
               setBathroomFilter(
@@ -146,7 +141,7 @@ const ListingFilter: React.FC = () => {
           <input
             type="number"
             placeholder="Max"
-            className="input input-bordered w-20"
+            className="input input-bordered w-20 border border-gray-300 px-2"
             value={filters.bathrooms.max ?? ""}
             onChange={(e) =>
               setBathroomFilter(
@@ -156,12 +151,12 @@ const ListingFilter: React.FC = () => {
             }
             min={0}
           />
-          <button
-            className="btn btn-xs ml-2"
+          <Button
+            variant="outline"
             onClick={() => setBathroomFilter(null, null)}
             type="button">
             Clear
-          </button>
+          </Button>
         </div>
       </div>
     </div>

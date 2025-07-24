@@ -31,7 +31,9 @@ export default function ListingsPage() {
       <div className="flex justify-between items-center mb-6 mt-4">
         <ProperViewLogo />
       </div>
-      <ListingFilter />
+      <div className="w-full flex justify-center">
+        <ListingFilter />
+      </div>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence mode="popLayout">
           {getFilteredListings().map((property) => (
