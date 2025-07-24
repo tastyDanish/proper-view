@@ -63,58 +63,107 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
       <div className="flex-1 grid gap-2">
         {editMode ? (
           <>
-            <input
-              name="title"
-              value={form.title || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Title"
-            />
-            <input
-              name="street_address"
-              value={form.street_address || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Street Address"
-            />
-            <input
-              name="city"
-              value={form.city || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="City"
-            />
-            <input
-              name="price"
-              type="number"
-              value={form.price || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Price"
-            />
-            <input
-              name="bedrooms"
-              type="number"
-              value={form.bedrooms || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Bedrooms"
-            />
-            <input
-              name="bathrooms"
-              type="number"
-              value={form.bathrooms || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Bathrooms"
-            />
-            <textarea
-              name="description"
-              value={form.description || ""}
-              onChange={handleChange}
-              className="border rounded px-2 py-1 mb-1"
-              placeholder="Description"
-            />
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="title">
+                Title
+              </label>
+              <input
+                name="title"
+                value={form.title || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Title"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="street_address">
+                Street Address
+              </label>
+              <input
+                name="street_address"
+                value={form.street_address || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Street Address"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="city">
+                City
+              </label>
+              <input
+                name="city"
+                value={form.city || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="City"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="price">
+                Price
+              </label>
+              <input
+                name="price"
+                type="number"
+                value={form.price || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Price"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="bedrooms">
+                Bedrooms
+              </label>
+              <input
+                name="bedrooms"
+                type="number"
+                value={form.bedrooms || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Bedrooms"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="bathrooms">
+                Bathrooms
+              </label>
+              <input
+                name="bathrooms"
+                type="number"
+                value={form.bathrooms || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Bathrooms"
+              />
+            </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="description">
+                Description
+              </label>
+              <textarea
+                name="description"
+                value={form.description || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1"
+                placeholder="Description"
+              />
+            </div>
           </>
         ) : (
           <>
@@ -138,7 +187,7 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({ property }) => {
           </>
         )}
       </div>
-      <div className="flex gap-2 mt-4 md:mt-0 md:ml-4">
+      <div className="flex flex-col h-full justify-end gap-2 mt-4 md:mt-0 md:ml-4">
         {editMode ? (
           <>
             <Button

@@ -7,6 +7,7 @@ import { Property } from "../../lib/db/properties";
 import Listing from "@/components/listings/Listing";
 import ListingFilter from "@/components/listings/Listing-filter";
 import ListingDetail from "@/components/listings/Listing-detail";
+import ProperViewLogo from "@/components/shared/proper-view-logo";
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -27,6 +28,9 @@ export default function ListingsPage() {
 
   return (
     <div className="p-4">
+      <div className="flex justify-between items-center mb-6 mt-4">
+        <ProperViewLogo />
+      </div>
       <ListingFilter />
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         <AnimatePresence mode="popLayout">
