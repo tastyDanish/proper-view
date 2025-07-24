@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import useSWRMutation from "swr/mutation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ListingGallery from "./listing-gallery";
 
 interface ListingDetailProps {
   property: Property;
@@ -107,6 +108,7 @@ export default function ListingDetail({
             <h2 className="text-2xl font-bold mb-2">{property.title}</h2>
             <p className="mb-4 text-gray-600">{property.description}</p>
             <div className="mb-4">
+              <ListingGallery />
               <span className="font-semibold">Address:</span>{" "}
               {property.street_address}, {property.city}
               <div className="mb-1">

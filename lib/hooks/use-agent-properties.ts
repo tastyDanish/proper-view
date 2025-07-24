@@ -3,6 +3,7 @@ import useSWRMutation from "swr/mutation";
 import { mutate } from "swr";
 import { Property } from "../db/properties";
 import { fetcher } from "../fetcher";
+import { toast } from "react-toastify";
 
 const addPropertyFn = async (
 	url: string,
@@ -46,7 +47,10 @@ export function useAgentProperties(agentName: string) {
 		"/api/properties",
 		addPropertyFn,
 		{
-			onSuccess: () => mutate(propertiesKey),
+			onSuccess: () => {
+				toast.success("Property added successfully");
+				mutate(propertiesKey);
+			},
 		},
 	);
 
@@ -54,7 +58,10 @@ export function useAgentProperties(agentName: string) {
 		"/api/properties",
 		updatePropertyFn,
 		{
-			onSuccess: () => mutate(propertiesKey),
+			onSuccess: () => {
+				toast.success("Property updated successfully");
+				mutate(propertiesKey);
+			},
 		},
 	);
 
@@ -62,7 +69,10 @@ export function useAgentProperties(agentName: string) {
 		"/api/properties",
 		deletePropertyFn,
 		{
-			onSuccess: () => mutate(propertiesKey),
+			onSuccess: () => {
+				toast.success("Property deleted successfully");
+				mutate(propertiesKey);
+			},
 		},
 	);
 

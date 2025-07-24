@@ -45,7 +45,7 @@ const NewListingDialog = ({ agentName }: NewListingDialogProps) => {
       bathrooms: Number(form.bathrooms),
       agent_id: agentName,
       agent_name: agentName,
-      status: "active",
+      status: "pending",
       created_at: null,
       updated_at: null,
     });

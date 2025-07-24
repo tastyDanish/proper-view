@@ -11,6 +11,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { useAgentProperties } from "@/lib/hooks/use-agent-properties";
+import { cn } from "@/lib/utils";
 
 interface AgentPropertyCardProps {
   property: Property;
@@ -28,7 +29,9 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
   const [form, setForm] = useState({ ...property });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) => {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
@@ -59,8 +62,8 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
   };
 
   return (
-    <div className="relative border rounded-lg p-4 bg-white shadow-sm flex flex-col md:flex-row md:items-center md:justify-between">
-      <div className="flex-1 grid gap-2">
+    <div className="relative border rounded-lg p-4 bg-white shadow-sm flex flex-col md:items-center md:justify-between">
+      <div className="flex-1 grid gap-2 w-full">
         {editMode ? (
           <>
             <div className="flex flex-col gap-2">
@@ -77,6 +80,23 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
                 placeholder="Title"
               />
             </div>
+            <div className="flex flex-col gap-2">
+              <label
+                className="font-bold"
+                htmlFor="status">
+                Status
+              </label>
+              <select
+                name="status"
+                value={form.status || ""}
+                onChange={handleChange}
+                className="border rounded px-2 py-1 mb-1">
+                <option value="active">Active</option>
+                <option value="pending">Pending</option>
+                <option value="sold">Sold</option>
+              </select>
+            </div>
+
             <div className="flex flex-col gap-2">
               <label
                 className="font-bold"
@@ -167,7 +187,20 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
           </>
         ) : (
           <>
-            <h2 className="text-xl font-semibold mb-1">{property.title}</h2>
+            <div className="flex flex-row gap-4 items-center w-full justify-between">
+              <h2 className="text-xl font-semibold mb-1">{property.title}</h2>
+              <div
+                className={cn(
+                  "px-2 py-1 rounded-md",
+                  property.status === "active"
+                    ? "bg-green-100 text-green-800"
+                    : property.status === "pending"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-yellow-100 text-yellow-800"
+                )}>
+                {property.status}
+              </div>
+            </div>
             <div className="text-gray-600 mb-1 flex gap-2">
               <div>{property.street_address}</div>
               <div>{property.city}</div>
@@ -187,7 +220,7 @@ const AgentPropertyCard: React.FC<AgentPropertyCardProps> = ({
           </>
         )}
       </div>
-      <div className="flex flex-col h-full justify-end gap-2 mt-4 md:mt-0 md:ml-4">
+      <div className="flex w-full justify-end gap-2 mt-4 md:mt-0 md:ml-4">
         {editMode ? (
           <>
             <Button
