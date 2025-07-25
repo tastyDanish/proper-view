@@ -17,7 +17,7 @@ A Next.js application powered by Supabase for property management and agent dash
 ### 1. Clone the Repository
 
 ```sh
-git clone <your-repo-url>
+git clone https://github.com/tastyDanish/proper-view.git
 cd proper-view
 ```
 
