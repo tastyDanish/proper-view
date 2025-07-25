@@ -75,6 +75,16 @@ Visit [http://localhost:3000/](http://localhost:3000/) in your browser to view t
 
 ---
 
+## Logging In
+
+This application uses a demonstration login system without real authentication. To access an agent's properties, enter the agent name exactly as it appears in the seed data. The available demo usernames are:
+
+- Peter
+- Sam
+- Grimble
+
+---
+
 ## Common Commands
 
 - **Start Supabase:** `supabase start`
